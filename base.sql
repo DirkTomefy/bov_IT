@@ -1,0 +1,4 @@
+CREATE TABLE race (
+    id SERIAL PRIMARY KEY,
+    libelle VARCHAR(100) NOT NULL
+);
