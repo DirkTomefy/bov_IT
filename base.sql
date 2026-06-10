@@ -15,7 +15,7 @@ CREATE TABLE lot (
     CONSTRAINT fk_lot_race
         FOREIGN KEY (idRace)
         REFERENCES race(id)
-
+);
 
 CREATE TABLE bovin (
     id SERIAL PRIMARY KEY,
@@ -24,5 +24,9 @@ CREATE TABLE bovin (
     id_lot INTEGER NOT NULL,
     mois_init INTEGER NOT NULL,
     mois_actuel INTEGER NOT NULL,
-    date_arrive DATE
+    date_arrive DATE,
+
+    CONSTRAINT fk_bovin_lot
+        FOREIGN KEY (id_lot)
+        REFERENCES lot(id)
 );
