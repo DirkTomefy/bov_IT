@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${isEdit} ? 'Modifier une race' : 'Créer une race'">Formulaire race</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+            min-height: 100vh;
+        }
+        .card-form {
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .card-header-custom {
+            background: linear-gradient(90deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .card-body-custom {
+            padding: 2rem;
+        }
+        .form-control-custom {
+            border-radius: 50px;
+            border: 1px solid #ced4da;
+            padding: 12px 20px;
+            transition: all 0.3s;
+        }
+        .form-control-custom:focus {
+            box-shadow: 0 0 0 0.25rem rgba(52,152,219,0.25);
+            border-color: #3498db;
+        }
+        .btn-submit {
+            background: linear-gradient(90deg, #2c3e50 0%, #3498db 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52,152,219,0.3);
+        }
+        .btn-cancel {
+            border-radius: 50px;
+            padding: 12px 30px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s;
+        }
+        .btn-cancel:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+        }
+        .icon-input {
+            position: relative;
+        }
+        .icon-input i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3498db;
+            z-index: 10;
+        }
+        .icon-input input {
+            padding-left: 45px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card card-form">
+                <div class="card-header-custom">
+                    <i class="bi bi-flower2 display-3"></i>
+                    <h2 class="mt-2 mb-0" th:text="${isEdit} ? 'Modifier la race' : 'Nouvelle race'">Formulaire</h2>
+                    <p class="mb-0 opacity-75" th:text="${isEdit} ? 'Mettez à jour les informations' : 'Ajoutez une nouvelle race bovine'"></p>
+                </div>
+                <div class="card-body-custom">
+                    <form th:action="@{${action}}" th:object="${race}" method="post">
+                        <div class="mb-4 icon-input">
+                            <i class="bi bi-pencil-square"></i>
+                            <input type="text" th:field="*{libelle}" id="libelle" class="form-control form-control-custom"
+                                   required placeholder="Ex: Charolaise, Limousine, Blonde d'Aquitaine...">
+                            <div class="form-text text-muted">Le libellé doit être unique et non vide.</div>
+                        </div>
+                        <div class="d-flex justify-content-between gap-3 mt-4">
+                            <button type="submit" class="btn btn-submit text-white flex-grow-1">
+                                <i class="bi bi-check-lg me-2"></i><span th:text="${isEdit} ? 'Mettre à jour' : 'Enregistrer'"></span>
+                            </button>
+                            <a th:href="@{/race/list}" class="btn btn-cancel flex-grow-1">
+                                <i class="bi bi-x-lg me-2"></i>Annuler
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
