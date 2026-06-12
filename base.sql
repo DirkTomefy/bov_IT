@@ -8,12 +8,12 @@ CREATE TABLE race (
 
 CREATE TABLE lot (
     id SERIAL PRIMARY KEY,
-    idRace INTEGER NOT NULL,
+    id_race INTEGER NOT NULL,
     nombre INTEGER NOT NULL,
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_lot_race
-        FOREIGN KEY (idRace)
+        FOREIGN KEY (id_race)
         REFERENCES race(id)
 );
 
