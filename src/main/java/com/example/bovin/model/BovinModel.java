@@ -14,18 +14,12 @@ public class BovinModel {
     @Column(name = "poids_init", nullable = false)
     private Double poidsInit;
 
-    @Column(name = "poids_actuel", nullable = false)
-    private Double poidsActuel;
-
     @ManyToOne
     @JoinColumn(name = "id_lot", nullable = false)
     private LotModel lot;
 
     @Column(name = "mois_init", nullable = false)
     private Integer moisInit;
-
-    @Column(name = "mois_actuel", nullable = false)
-    private Integer moisActuel;
 
     @Column(name = "date_arrive")
     private LocalDate dateArrive;
@@ -35,10 +29,8 @@ public class BovinModel {
 
     public BovinModel(Double poidsInit, Double poidsActuel, LotModel lot, Integer moisInit, Integer moisActuel, LocalDate dateArrive) {
         this.poidsInit = poidsInit;
-        this.poidsActuel = poidsActuel;
         this.lot = lot;
         this.moisInit = moisInit;
-        this.moisActuel = moisActuel;
         this.dateArrive = dateArrive;
     }
 
@@ -58,14 +50,6 @@ public class BovinModel {
         this.poidsInit = poidsInit;
     }
 
-    public Double getPoidsActuel() {
-        return poidsActuel;
-    }
-
-    public void setPoidsActuel(Double poidsActuel) {
-        this.poidsActuel = poidsActuel;
-    }
-
     public LotModel getLot() {
         return lot;
     }
@@ -82,14 +66,6 @@ public class BovinModel {
         this.moisInit = moisInit;
     }
 
-    public Integer getMoisActuel() {
-        return moisActuel;
-    }
-
-    public void setMoisActuel(Integer moisActuel) {
-        this.moisActuel = moisActuel;
-    }
-
     public LocalDate getDateArrive() {
         return dateArrive;
     }
@@ -103,10 +79,8 @@ public class BovinModel {
         return "BovinModel{" +
                 "id=" + id +
                 ", poidsInit=" + poidsInit +
-                ", poidsActuel=" + poidsActuel +
                 ", lot=" + lot +
                 ", moisInit=" + moisInit +
-                ", moisActuel=" + moisActuel +
                 ", dateArrive=" + dateArrive +
                 '}';
     }

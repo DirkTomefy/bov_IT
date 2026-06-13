@@ -20,10 +20,8 @@ CREATE TABLE lot (
 CREATE TABLE bovin (
     id SERIAL PRIMARY KEY,
     poids_init DOUBLE PRECISION NOT NULL,
-    poids_actuel DOUBLE PRECISION NOT NULL,
     id_lot INTEGER NOT NULL,
     mois_init INTEGER NOT NULL,
-    mois_actuel INTEGER NOT NULL,
     date_arrive DATE,
 
     CONSTRAINT fk_bovin_lot
