@@ -1,6 +1,7 @@
 package com.example.bovin.service;
 
 import com.example.bovin.model.BovinModel;
+import com.example.bovin.model.LotModel;
 import com.example.bovin.model.RecensementPoidBovin;
 import com.example.bovin.model.vue.VueBovinPoidsMoisActuel;
 import com.example.bovin.repository.BovinPoidMoisRepository;
@@ -71,10 +72,11 @@ public class BovinService {
         BovinModel existingBovin = bovinRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bovin introuvable avec l'id : " + id));
 
-
-        //verification du chagmement de poid 
-        //changement de poid si changer
-        //verification changement de lot 
+        //verification changement de lot (donc de race)
+        if(existingBovin.getLot() == null || 
+        bovin.getLot().getId() != existingBovin.getLot().getId()) {
+            existingBovin.setLot(bovin.getLot());
+        }
         //changemnt de lot si changer
         existingBovin.setPoidsInit(bovin.getPoidsInit());
         existingBovin.setMoisInit(bovin.getMoisInit());
