@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.bovin.model.BovinModel;
 import com.example.bovin.model.LotModel;
 import com.example.bovin.model.RaceModel;
+import com.example.bovin.model.vue.VueBovinPoidsMoisActuel;
 import com.example.bovin.service.BovinService;
 import com.example.bovin.service.LotService;
 import com.example.bovin.service.RaceService;
@@ -89,7 +90,7 @@ public class LotController {
     @GetMapping("/detail/{id}")
     public String detailLot(@PathVariable Integer id, Model model) {
         LotModel lot = lotService.getById(id);
-        List<BovinModel> bovins = bovinService.getByLotId(id);
+        List<VueBovinPoidsMoisActuel> bovins = bovinService.getByLotId(id);
 
         model.addAttribute("lot", lot);
         model.addAttribute("bovins", bovins);

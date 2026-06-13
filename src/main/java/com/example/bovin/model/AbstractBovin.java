@@ -14,7 +14,7 @@ public abstract class AbstractBovin {
     private Double poidsInit;
 
     @ManyToOne
-    @JoinColumn(name = "id_lot", nullable = false)
+    @JoinColumn(name = "id_lot", nullable = true)
     private LotModel lot;
 
     @Column(name = "mois_init", nullable = false)

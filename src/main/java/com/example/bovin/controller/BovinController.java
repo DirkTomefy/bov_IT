@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.bovin.model.BovinModel;
 import com.example.bovin.model.LotModel;
@@ -93,7 +94,7 @@ public class BovinController {
     // Retire le lot d'un bovin (le bovin n'est pas supprimé, juste détaché du lot)
     @GetMapping("/retirer-lot/{id}")
     public String retirerLotDuBovin(@PathVariable Integer id, @RequestParam Integer lotId) {
-        bovinService.removeLotFromBovin(id);
+        bovinService.removeBovinFromLot(id);
         return "redirect:/lot/detail/" + lotId;
     }
 }

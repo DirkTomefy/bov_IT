@@ -5,6 +5,7 @@ import com.example.bovin.model.RecensementPoidBovin;
 import com.example.bovin.model.vue.VueBovinPoidsMoisActuel;
 import com.example.bovin.repository.BovinPoidMoisRepository;
 import com.example.bovin.repository.BovinRepository;
+import com.example.bovin.repository.LotRepository;
 import com.example.bovin.repository.RecensementPoidBovinRepository;
 
 import jakarta.transaction.Transactional;
@@ -28,6 +29,17 @@ public class BovinService {
 
     public List<VueBovinPoidsMoisActuel> getAllBovinPoidMoisActuel() {
         return bovinPoidMoisRepository.findAll();
+    }
+
+    @Transactional(rollbackOn = RuntimeException.class)
+    public void removeBovinFromLot(Integer idBovin) {
+        BovinModel existingBovin = bovinRepository.findById(idBovin)
+                .orElseThrow(() -> new RuntimeException("Bovin introuvable avec l'id : " + idBovin));
+        existingBovin.setLot(null);
+    }
+
+    public List<VueBovinPoidsMoisActuel> getByLotId(Integer idLot) {
+        return this.bovinPoidMoisRepository.findAllByLotId(idLot);
     }
 
     @Transactional(rollbackOn = RuntimeException.class)
