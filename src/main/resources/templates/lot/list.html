@@ -64,7 +64,7 @@
                         <th>Race</th>
                         <th>Nombre</th>
                         <th>Date de création</th>
-                        <th width="150" class="text-center">Actions</th>
+                        <th width="180" class="text-center">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -83,6 +83,9 @@
                             <span th:text="${#temporals.format(lot.dateCreation, 'dd-MM-yyyy HH:mm')}">01-01-2026 00:00</span>
                         </td>
                         <td class="text-center action-icons">
+                            <a th:href="@{/lot/detail/{id}(id=${lot.id})}" class="btn btn-sm btn-outline-info btn-icon" title="Détail">
+                                <i class="bi bi-eye"></i>
+                            </a>
                             <a th:href="@{/lot/modif/{id}(id=${lot.id})}" class="btn btn-sm btn-outline-warning btn-icon" title="Modifier">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
