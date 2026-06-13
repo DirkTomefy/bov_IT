@@ -2,6 +2,8 @@ package com.example.bovin.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,8 +23,8 @@ public abstract class AbstractBovin {
     private Integer moisInit;
 
     @Column(name = "date_arrive")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateArrive;
-
     public Double getPoidsInit() {
         return poidsInit;
     }
