@@ -15,8 +15,9 @@ public class BovinService {
     private BovinRepository bovinRepository;
 
     public BovinModel save(BovinModel bovin) {
-        bovin.setPoidsActuel(bovin.getPoidsInit());      // règle 1
-        bovin.setMoisActuel(bovin.getMoisInit());        // règle 2
+      
+        //-- insertion du poid actuel du bovin ---
+
         if (bovin.getDateArrive() == null) {             // règle 3
             bovin.setDateArrive(LocalDate.now());
         }
@@ -24,14 +25,18 @@ public class BovinService {
     }
 
     public BovinModel update(Integer id, BovinModel bovin) {
+        
+        //recuperer le bovin s il existe
         BovinModel existingBovin = bovinRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bovin introuvable avec l'id : " + id));
 
+
+        //verification du chagmement de poid 
+        //changement de poid si changer
+        //verification changement de lot 
+        //changemnt de lot si changer
         existingBovin.setPoidsInit(bovin.getPoidsInit());
-        existingBovin.setPoidsActuel(bovin.getPoidsActuel());
-        existingBovin.setLot(bovin.getLot());
         existingBovin.setMoisInit(bovin.getMoisInit());
-        existingBovin.setMoisActuel(bovin.getMoisActuel());
         existingBovin.setDateArrive(bovin.getDateArrive());
 
         return bovinRepository.save(existingBovin);
