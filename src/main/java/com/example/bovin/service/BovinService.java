@@ -1,12 +1,13 @@
 package com.example.bovin.service;
 
-import com.example.bovin.model.BovinModel;
-import com.example.bovin.repository.BovinRepository;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.example.bovin.model.BovinModel;
+import com.example.bovin.repository.BovinRepository;
 
 @Service
 public class BovinService {
@@ -41,7 +42,6 @@ public class BovinService {
         return bovinRepository.findAll();
     }
 
-
     public BovinModel findById(Integer id) {
         return bovinRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bovin introuvable : " + id));
@@ -53,5 +53,20 @@ public class BovinService {
         }
 
         bovinRepository.deleteById(id);
+    }
+
+    // Récupère la liste des bovins appartenant à un lot donné
+    public List<BovinModel> getByLotId(Integer lotId) {
+        return bovinRepository.findByLot_Id(lotId);
+    }
+
+    // Met le lot du bovin à null (le bovin n'est plus rattaché à aucun lot)
+    public BovinModel removeLotFromBovin(Integer bovinId) {
+        BovinModel bovin = bovinRepository.findById(bovinId)
+                .orElseThrow(() -> new RuntimeException("Bovin introuvable avec l'id : " + bovinId));
+
+        bovin.setLot(null);
+
+        return bovinRepository.save(bovin);
     }
 }
