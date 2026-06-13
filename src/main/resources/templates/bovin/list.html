@@ -87,9 +87,15 @@
                         <td><span class="badge bg-secondary rounded-pill" th:text="${bovin.id}">1</span></td>
                         <td class="text-center" th:text="${bovin.poidsInit}">0</td>
                         <td class="text-center" th:text="${bovin.poidsActuel}">0</td>
-                        <td class="text-center">
-                            <span th:text="|#${bovin.lot.id}|">#1</span>
-                            <span class="badge badge-race ms-1" th:text="${bovin.lot.race.libelle}">Race</span>
+                       <td class="text-center">
+                            <th:block th:if="${bovin.lot != null}">
+                                <span th:text="|#${bovin.lot.id}|">#1</span>
+                                <span class="badge bg-primary ms-1" th:text="${bovin.lot.race.libelle}">Race</span>
+                            </th:block>
+                            
+                            <th:block th:if="${bovin.lot == null}">
+                                <span class="badge bg-danger">Aucun lot</span>
+                            </th:block>
                         </td>
                         <td class="text-center" th:text="${bovin.moisInit}">0</td>
                         <td class="text-center" th:text="${bovin.moisActuel}">0</td>
