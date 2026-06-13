@@ -5,6 +5,8 @@ import com.example.bovin.model.RecensementPoidBovin;
 import com.example.bovin.repository.BovinRepository;
 import com.example.bovin.repository.RecensementPoidBovinRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +21,16 @@ public class BovinService {
     @Autowired
     private RecensementPoidBovinRepository recensementPoidBovinRepository;
 
+    
+    @Transactional(rollbackOn = RuntimeException.class)
     public BovinModel save(BovinModel bovin) {
-      
-        //-- insertion du poid actuel du bovin ---
-
         if (bovin.getDateArrive() == null) {             // règle 3
             bovin.setDateArrive(LocalDate.now());
         }
-        return bovinRepository.save(bovin);
+        bovinRepository.save(bovin);
+        RecensementPoidBovin recensementPoidBovin = new RecensementPoidBovin(bovin,bovin.getPoidsInit(), bovin.getDateArrive());
+        this.addRecensementPoidBovin(bovin.getId(),recensementPoidBovin);
+        return bovin;
     }
     public void addRecensementPoidBovin(Integer idBovin,RecensementPoidBovin recensementPoidBovin) {
         //verifier si le bovin existe 
