@@ -77,7 +77,7 @@
                         <th width="80">Poids actuel</th>
                         <th width="80">Lot</th>
                         <th width="80">Mois init</th>
-                        <!-- <th width="80">Mois actuel</th> -->
+                        <th width="80">Mois actuel</th>
                         <th width="150" class="text-center">Date d'arrivée</th>
                         <th width="150" class="text-center">Actions</th>
                     </tr>
@@ -92,7 +92,7 @@
                             <span class="badge badge-race ms-1" th:text="${bovin.lot.race.libelle}">Race</span>
                         </td>
                         <td class="text-center" th:text="${bovin.moisInit}">0</td>
-                        <!-- <td class="text-center" th:text="${bovin.moisActuel}">0</td> -->
+                        <td class="text-center" th:text="${bovin.moisActuel}">0</td>
                         <td class="text-center" th:text="${bovin.dateArrive}">0</td>
                         <td class="text-center action-icons">
                             <a th:href="@{/bovin/modif/{id}(id=${bovin.id})}" class="btn btn-sm btn-outline-warning btn-icon" title="Modifier">

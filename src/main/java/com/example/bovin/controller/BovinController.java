@@ -2,9 +2,7 @@ package com.example.bovin.controller;
 
 import com.example.bovin.model.BovinModel;
 import com.example.bovin.model.LotModel;
-import com.example.bovin.model.RecensementPoidBovin;
-import com.example.bovin.model.vue.VueBovinPoidActuel;
-import com.example.bovin.repository.BovinPoidRepository;
+import com.example.bovin.model.vue.VueBovinPoidsMoisActuel;
 import com.example.bovin.service.BovinService;
 import com.example.bovin.service.LotService;
 
@@ -26,21 +24,19 @@ public class BovinController {
     @Autowired
     private LotService lotService;
 
-    @Autowired 
-    private BovinPoidRepository bovinPoidRepository;
 
     @GetMapping("/test")
     @ResponseBody
-    public VueBovinPoidActuel test() {
+    public List<VueBovinPoidsMoisActuel> test() {
         //cree une recencement teste
         return 
-        bovinPoidRepository.findById(1).get();
+        bovinService.getAllBovinPoidMoisActuel();
         //return bovinService.getLastRecensementPoid(1);
     }
     
     @GetMapping("/list")
     public String listBovins(Model model) {
-        List<VueBovinPoidActuel> bovins = this.bovinPoidRepository.findAll();
+        List<VueBovinPoidsMoisActuel> bovins = this.bovinService.getAllBovinPoidMoisActuel();
         model.addAttribute("bovins", bovins);
         return "bovin/list";
     }

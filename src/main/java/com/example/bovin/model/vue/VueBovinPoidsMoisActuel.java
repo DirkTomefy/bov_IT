@@ -10,18 +10,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "v_bovin_poid_actuel")
+@Table(name = "v_bovin_mois_actuel_poid_actuel")
 @Immutable
-public class VueBovinPoidActuel extends AbstractBovin {
-
+public class VueBovinPoidsMoisActuel extends AbstractBovin  {
     @Id
     private Integer id;
-
     @Column(name = "poid_actuel")
     private Double poidsActuel;
 
-    
- public Integer getId() {
+    @Column(name = "mois_actuel")
+    private Integer moisActuel;
+
+    public Integer getId() {
         return id;
     }
 
@@ -36,4 +36,14 @@ public class VueBovinPoidActuel extends AbstractBovin {
     public void setPoidsActuel(Double poidsActuel) {
         this.poidsActuel = poidsActuel;
     }
+
+    public Integer getMoisActuel() {
+        return moisActuel;
+    }
+
+    public void setMoisActuel(Integer moisActuel) {
+        this.moisActuel = moisActuel;
+    }
+    
+    
 }

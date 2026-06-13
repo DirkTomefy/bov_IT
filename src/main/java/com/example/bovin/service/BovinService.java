@@ -2,6 +2,8 @@ package com.example.bovin.service;
 
 import com.example.bovin.model.BovinModel;
 import com.example.bovin.model.RecensementPoidBovin;
+import com.example.bovin.model.vue.VueBovinPoidsMoisActuel;
+import com.example.bovin.repository.BovinPoidMoisRepository;
 import com.example.bovin.repository.BovinRepository;
 import com.example.bovin.repository.RecensementPoidBovinRepository;
 
@@ -21,7 +23,13 @@ public class BovinService {
     @Autowired
     private RecensementPoidBovinRepository recensementPoidBovinRepository;
 
-    
+    @Autowired
+    private BovinPoidMoisRepository bovinPoidMoisRepository;
+
+    public List<VueBovinPoidsMoisActuel> getAllBovinPoidMoisActuel() {
+        return bovinPoidMoisRepository.findAll();
+    }
+
     @Transactional(rollbackOn = RuntimeException.class)
     public BovinModel save(BovinModel bovin) {
         if (bovin.getDateArrive() == null) {             // règle 3

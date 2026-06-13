@@ -63,3 +63,15 @@ SELECT
 FROM bovin b
     JOIN v_bovin_dernier_recencement_poid vdrp
         on b.id = vdrp.id_bovin;
+
+
+-- vue bovin  avec les information de mois et du poids actuel 
+CREATE VIEW v_bovin_mois_actuel_poid_actuel as
+SELECT 
+    b.*,
+    vdrp.poid poid_actuel,
+    (EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_arrive)) * 12 + 
+    EXTRACT(MONTH FROM AGE(CURRENT_DATE, date_arrive)))  + mois_init AS mois_actuel
+FROM bovin b   
+JOIN v_bovin_dernier_recencement_poid vdrp
+        on b.id = vdrp.id_bovin;
