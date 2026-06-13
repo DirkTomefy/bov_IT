@@ -28,6 +28,13 @@ public class BovinService {
         }
         return bovinRepository.save(bovin);
     }
+    public void addRecensementPoidBovin(Integer idBovin,RecensementPoidBovin recensementPoidBovin) {
+        //verifier si le bovin existe 
+          BovinModel existingBovin = bovinRepository.findById(idBovin)
+                .orElseThrow(() -> new RuntimeException("Bovin introuvable avec l'id : " + idBovin));
+        recensementPoidBovin.setBovin(existingBovin);
+        recensementPoidBovinRepository.save(recensementPoidBovin);
+    }
 
     public RecensementPoidBovin getLastRecensementPoid(Integer idbovin) {
         RecensementPoidBovin recensementPoidBovin = this.recensementPoidBovinRepository.findFirstByBovinIdOrderByDateRecensementDesc(idbovin).get();
