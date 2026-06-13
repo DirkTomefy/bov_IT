@@ -1,7 +1,10 @@
 package com.example.bovin.service;
 
 import com.example.bovin.model.BovinModel;
+import com.example.bovin.model.RecensementPoidBovin;
 import com.example.bovin.repository.BovinRepository;
+import com.example.bovin.repository.RecensementPoidBovinRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,8 @@ public class BovinService {
 
     @Autowired
     private BovinRepository bovinRepository;
+    @Autowired
+    private RecensementPoidBovinRepository recensementPoidBovinRepository;
 
     public BovinModel save(BovinModel bovin) {
       
@@ -22,6 +27,11 @@ public class BovinService {
             bovin.setDateArrive(LocalDate.now());
         }
         return bovinRepository.save(bovin);
+    }
+
+    public RecensementPoidBovin getLastRecensementPoid(Integer idbovin) {
+        RecensementPoidBovin recensementPoidBovin = this.recensementPoidBovinRepository.findFirstByBovinIdOrderByDateRecensementDesc(idbovin).get();
+        return recensementPoidBovin;
     }
 
     public BovinModel update(Integer id, BovinModel bovin) {
