@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Détail du lot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+            min-height: 100vh;
+        }
+        .card-custom {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card-custom:hover {
+            transform: translateY(-5px);
+        }
+        .table-custom {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .table-custom th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: 600;
+            border: none;
+        }
+        .btn-icon {
+            margin: 0 5px;
+            transition: all 0.2s;
+        }
+        .btn-icon:hover {
+            transform: scale(1.05);
+        }
+        .header-title {
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .info-box .label {
+            color: #6c757d;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-box .value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+
+    <!-- Carte info du lot -->
+    <div class="card card-custom mb-4">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                <div>
+                    <h1 class="header-title">
+                        <i class="bi bi-box-seam me-2 text-primary"></i>Détail du lot
+                        <span class="badge bg-secondary rounded-pill" th:text="'#' + ${lot.id}">#1</span>
+                    </h1>
+                    <p class="text-muted mt-2">Informations générales et bovins associés</p>
+                </div>
+                <div>
+                    <a th:href="@{/lot/modif/{id}(id=${lot.id})}" class="btn btn-warning rounded-pill shadow-sm">
+                        <i class="bi bi-pencil-square me-1"></i> Modifier
+                    </a>
+                    <a th:href="@{/lot/list}" class="btn btn-secondary rounded-pill shadow-sm">
+                        <i class="bi bi-arrow-left me-1"></i> Retour
+                    </a>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="label"><i class="bi bi-tag-fill me-1"></i>Race</div>
+                        <div class="value" th:text="${lot.race != null} ? ${lot.race.libelle} : 'Non défini'">Brahman</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="label"><i class="bi bi-hash me-1"></i>Nombre (initial)</div>
+                        <div class="value" th:text="${lot.nombre}">0</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <div class="label"><i class="bi bi-calendar3 me-1"></i>Date de création</div>
+                        <div class="value" th:text="${#temporals.format(lot.dateCreation, 'dd-MM-yyyy HH:mm')}">01-01-2026 00:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carte liste des bovins -->
+    <div class="card card-custom">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                <div>
+                    <h2 class="header-title"><i class="bi bi-list-ul me-2 text-primary"></i>Bovins du lot</h2>
+                    <p class="text-muted mt-2">Liste des bovins actuellement rattachés à ce lot</p>
+                </div>
+                <span class="badge bg-primary rounded-pill fs-6" th:text="${#lists.size(bovins)} + ' bovin(s)'">0 bovin(s)</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle table-custom">
+                    <thead>
+                    <tr>
+                        <th width="80">ID</th>
+                        <th>Poids initial</th>
+                        <th>Poids actuel</th>
+                        <th>Mois initial</th>
+                        <th>Mois actuel</th>
+                        <th>Date d'arrivée</th>
+                        <th width="150" class="text-center">Opérations</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="bovin : ${bovins}">
+                        <td><span class="badge bg-secondary rounded-pill" th:text="${bovin.id}">1</span></td>
+                        <td>
+                            <i class="bi bi-speedometer2 text-muted me-1"></i>
+                            <span th:text="${bovin.poidsInit}">0</span> kg
+                        </td>
+                        <td>
+                            <i class="bi bi-speedometer text-success me-1"></i>
+                            <span th:text="${bovin.poidsActuel}">0</span> kg
+                        </td>
+                        <td th:text="${bovin.moisInit}">0</td>
+                        <td th:text="${bovin.moisActuel}">0</td>
+                        <td>
+                            <i class="bi bi-calendar3 text-muted me-1"></i>
+                            <span th:text="${bovin.dateArrive}">2026-01-01</span>
+                        </td>
+                        <td class="text-center action-icons">
+                            <a th:href="@{/bovin/modif/{id}(id=${bovin.id})}" class="btn btn-sm btn-outline-warning btn-icon" title="Modifier">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <a th:href="@{/bovin/retirer-lot/{id}(id=${bovin.id}, lotId=${lot.id})}"
+                               class="btn btn-sm btn-outline-danger btn-icon" title="Retirer du lot"
+                               onclick="return confirm('Retirer ce bovin du lot ? Le bovin ne sera pas supprimé.')">
+                                <i class="bi bi-box-arrow-right"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(bovins)}">
+                        <td colspan="7" class="text-center py-4">
+                            <i class="bi bi-inbox display-4 text-muted"></i>
+                            <p class="mt-2 mb-0">Aucun bovin dans ce lot.</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

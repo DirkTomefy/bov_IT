@@ -1,12 +1,20 @@
 package com.example.bovin.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "bovin")
 public class BovinModel {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -18,7 +26,7 @@ public class BovinModel {
     private Double poidsActuel;
 
     @ManyToOne
-    @JoinColumn(name = "id_lot", nullable = false)
+    @JoinColumn(name = "id_lot", nullable = true)
     private LotModel lot;
 
     @Column(name = "mois_init", nullable = false)

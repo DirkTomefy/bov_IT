@@ -30,3 +30,5 @@ CREATE TABLE bovin (
         FOREIGN KEY (id_lot)
         REFERENCES lot(id)
 );
+
+ALTER TABLE bovin ALTER COLUMN id_lot DROP NOT NULL;
