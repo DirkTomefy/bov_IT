@@ -40,3 +40,25 @@ CREATE TABLE recensement_poid_bovin (
         REFERENCES bovin(id)
 );
 
+-- vue pour recuperer la date du dernier recnesement de poid des bovin
+CREATE VIEW v_bovin_date_dernier_recencement_poid as
+SELECT 
+    rpb.id_bovin, Max(rpb.date_recensement) date_dernier_recensement_poid
+FROM  recensement_poid_bovin rpb 
+GROUP BY rpb.id_bovin;
+
+-- vue pour recuperer le deriner recemcement de poid d un bovin
+CREATE VIEW v_bovin_dernier_recencement_poid as
+SELECT 
+    rpb.*
+FROM recensement_poid_bovin rpb 
+    JOIN v_bovin_date_dernier_recencement_poid vbddrp 
+        ON rpb.id_bovin = vbddrp.id_bovin AND rpb.date_recensement = vbddrp.date_dernier_recensement_poid;
+
+-- vue pour recuperer les info de bovin et son dernier poid
+SELECT 
+    b.*,
+    vdrp.poid poid_actuel
+FROM bovin b
+    JOIN v_bovin_dernier_recencement_poid vdrp
+        on b.id = vdrp.id_bovin;
