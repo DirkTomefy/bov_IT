@@ -33,5 +33,10 @@ CREATE TABLE recensement_poid_bovin (
     id SERIAL PRIMARY KEY,
     id_bovin INTEGER NOT NULL,
     poid DOUBLE PRECISION NOT NULL,
-    date_recensement DATE
+    date_recensement DATE,
+
+     CONSTRAINT fk_recensement_poid_bovin
+        FOREIGN KEY (id_bovin)
+        REFERENCES bovin(id)
 );
+
