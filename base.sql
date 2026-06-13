@@ -28,3 +28,10 @@ CREATE TABLE bovin (
         FOREIGN KEY (id_lot)
         REFERENCES lot(id)
 );
+
+CREATE TABLE recensement_poid_bovin (
+    id SERIAL PRIMARY KEY,
+    id_bovin INTEGER NOT NULL,
+    poid DOUBLE PRECISION NOT NULL,
+    date_recensement DATE
+);
