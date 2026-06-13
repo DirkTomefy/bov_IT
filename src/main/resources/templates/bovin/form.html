@@ -91,6 +91,7 @@
                     <form th:action="@{${action}}" th:object="${bovin}" method="post">
                         <input type="hidden" th:field="*{id}" th:if="${isEdit}" />
 
+                        <!-- inserer du poind initial -->
                         <div class="mb-4 icon-input">
                             <i class="bi bi-speedometer2"></i>
                             <input type="number" step="0.1" th:field="*{poidsInit}"
@@ -98,6 +99,7 @@
                                    placeholder="Poids initial en kg (Ex: 250.5)">
                         </div>
 
+                        <!-- inserer le mois initial -->
                         <div class="mb-4 icon-input">
                             <i class="bi bi-hourglass-split"></i>
                             <input type="number" th:field="*{moisInit}"
@@ -105,6 +107,7 @@
                                    placeholder="Mois initial (Ex: 12)">
                         </div>
 
+                        <!-- insertion du lot  -->
                         <div class="mb-4 icon-input">
                             <i class="bi bi-box-seam"></i>
                             <select th:field="*{lot.id}" class="form-select form-select-custom" required>
@@ -116,6 +119,7 @@
                             </select>
                         </div>
 
+                        <!-- inserer date arrive -->
                         <div class="mb-4 icon-input">
                             <i class="bi bi-calendar-event"></i>
                             <input type="date" th:field="*{dateArrive}" class="form-control form-control-custom">

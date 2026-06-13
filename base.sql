@@ -56,6 +56,7 @@ FROM recensement_poid_bovin rpb
         ON rpb.id_bovin = vbddrp.id_bovin AND rpb.date_recensement = vbddrp.date_dernier_recensement_poid;
 
 -- vue pour recuperer les info de bovin et son dernier poid
+CREATE VIEW v_bovin_poid_actuel as
 SELECT 
     b.*,
     vdrp.poid poid_actuel

@@ -28,6 +28,17 @@ public class RecensementPoidBovin {
     @Column(name = "date_recensement",nullable = false)
     private LocalDate dateRecensement;
 
+    
+
+    public RecensementPoidBovin() {
+    }
+
+    public RecensementPoidBovin(BovinModel bovin, Double poid, LocalDate dateRecensement) {
+        this.bovin = bovin;
+        this.poid = poid;
+        this.dateRecensement = dateRecensement;
+    }
+
     public Integer getId() {
         return id;
     }
