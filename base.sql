@@ -75,3 +75,105 @@ SELECT
 FROM bovin b   
 JOIN v_bovin_dernier_recencement_poid vdrp
         on b.id = vdrp.id_bovin;
+
+-- Module : Fournisseurs
+
+CREATE TABLE type_fournisseur (
+    id_type SERIAL PRIMARY KEY,
+    code VARCHAR(20) UNIQUE NOT NULL, -- Un code court pour ton code Java (ex: 'BOVIN', 'ALIMENT')
+    libelle VARCHAR(50) NOT NULL       -- Hoe inona ilay avarotrany amintsika (ex: 'Bovins / Bétail', 'Aliments / Fourrage')
+);
+
+CREATE TABLE produit (
+    id_produit SERIAL PRIMARY KEY,
+    nom_produit VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE fournisseur (
+    id_fournisseur SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    id_type_fournisseur INT NOT NULL, -- Clé étrangère vers le type
+    telephone VARCHAR(20),
+    e_mail VARCHAR(100),
+    adresse TEXT,
+    nom_interlocuteur VARCHAR(100),   -- Le nom de ton contact physique
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Déclaration de la Foreign Key
+    CONSTRAINT fk_fournisseur_type 
+        FOREIGN KEY (id_type_fournisseur) 
+        REFERENCES type_fournisseur(id_type)
+);
+
+CREATE TABLE produit_fournisseur (
+    id_fournisseur INT,
+    id_produit INT,
+    prix_unitaire DECIMAL(10, 2) NOT NULL,
+    unite_mesure VARCHAR(20), 
+    minimum_commande INT DEFAULT 0,
+    delai_livraison_jours INT, 
+    
+    PRIMARY KEY (id_fournisseur, id_produit),
+    
+    CONSTRAINT fk_prod_fourn_fournisseur
+        FOREIGN KEY (id_fournisseur) 
+        REFERENCES fournisseur(id_fournisseur),
+        
+    CONSTRAINT fk_prod_fourn_produit
+        FOREIGN KEY (id_produit) 
+        REFERENCES produit(id_produit)
+);
+-- Insertion des types de base pour ton projet d'engraissement
+INSERT INTO type_fournisseur (code, libelle) VALUES
+('BOVIN', 'Bovins (Naisseurs / Éleveurs)'),
+('ALIMENT', 'Aliments & Fourrage'),
+('SANITAIRE', 'Soins Vétérinaires & Médicaments'),
+('MATERIEL', 'Équipements & Matériel d''élevage');
+
+CREATE TABLE type_payement (
+    id SERIAL PRIMARY KEY,
+    libelle VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE etat_payement (
+    id SERIAL PRIMARY KEY,
+    libelle VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE achat (
+    id SERIAL PRIMARY KEY,
+    id_fournisseur INTEGER NOT NULL,
+    date_achat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_type_payement INTEGER NOT NULL,
+    id_etat_payement INTEGER NOT NULL,
+    prix_total DOUBLE PRECISION NOT NULL, -- Montant global de la facture
+
+    CONSTRAINT fk_achat_fournisseur
+        FOREIGN KEY (id_fournisseur)
+        REFERENCES fournisseur(id_fournisseur),
+
+    CONSTRAINT fk_achat_type_payement
+        FOREIGN KEY (id_type_payement)
+        REFERENCES type_payement(id),
+
+    CONSTRAINT fk_achat_etat_payement
+        FOREIGN KEY (id_etat_payement)
+        REFERENCES etat_payement(id)
+);
+
+CREATE TABLE achat_details (
+    id SERIAL PRIMARY KEY,
+    id_achat INTEGER NOT NULL,
+    id_produit INTEGER NOT NULL,
+    quantite DOUBLE PRECISION NOT NULL,
+    prix_unitaire_facture DOUBLE PRECISION NOT NULL, -- Fige le prix au moment de la transaction
+
+    CONSTRAINT fk_details_achat
+        FOREIGN KEY (id_achat)
+        REFERENCES achat(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_details_produit
+        FOREIGN KEY (id_produit)
+        REFERENCES produit(id_produit)
+);

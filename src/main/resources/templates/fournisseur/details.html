@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Fiche - ' + ${fournisseur.nom}">Détails Fournisseur</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <a th:href="@{/fournisseurs}" class="inline-flex items-center text-sm text-indigo-600 hover:underline mb-4">
+            ← Retour à la liste des fournisseurs
+        </a>
+
+        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+            <div class="flex justify-between items-start border-b border-gray-100 pb-4 mb-4">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900" th:text="${fournisseur.nom}">Nom du Fournisseur</h1>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Catégorie : <span class="font-semibold text-indigo-600" th:text="${fournisseur.typeFournisseur.libelle}">Type</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Contact Direct</h3>
+                    <p class="mt-2 text-gray-700"><strong>Interlocuteur :</strong> <span th:text="${fournisseur.nomInterlocuteur}">-</span></p>
+                    <p class="text-gray-700"><strong>Téléphone :</strong> <span th:text="${fournisseur.telephone}">-</span></p>
+                    <p class="text-gray-700"><strong>E-mail :</strong> <span th:text="${fournisseur.email}">-</span></p>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Adresse & Siège</h3>
+                    <p class="mt-2 text-gray-700 whitespace-pre-line" th:text="${fournisseur.adresse}">Adresse non renseignée.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Catalogue produits & Tarifs</h2>
+        
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Désignation du Produit</th>
+                        <th class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Prix Unitaire</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Unité</th>
+                        <th class="px-6 py-3 text-center text-xs font-semibold text-gray-600 uppercase">Min. Commande</th>
+                        <th class="px-6 py-3 text-center text-xs font-semibold text-gray-600 uppercase">Délai de Livraison</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <tr th:if="${#lists.isEmpty(catalogue)}">
+                        <td colspan="5" class="px-6 py-6 text-center text-gray-500">
+                            Aucun produit enregistré pour ce fournisseur actuellement.
+                        </td>
+                    </tr>
+                    
+                    <tr th:each="item : ${catalogue}" class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-medium text-gray-900" th:text="${item.produit.nomProduit}">Nom du produit</td>
+                        <td class="px-6 py-4 text-right font-semibold text-gray-900" 
+                            th:text="${#numbers.formatDecimal(item.prixUnitaireProduit, 1, 2) + ' MGA'}">0.00 MGA</td>
+                        <td class="px-6 py-4 text-gray-600" th:text="${item.uniteMesure}">kg</td>
+                        <td class="px-6 py-4 text-center text-gray-600" th:text="${item.minimumCommande}">0</td>
+                        <td class="px-6 py-4 text-center text-gray-600">
+                            <span th:text="${item.delaiLivraisonJours}">-</span> jours
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
