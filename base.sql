@@ -41,14 +41,14 @@ CREATE TABLE recensement_poid_bovin (
 );
 
 -- vue pour recuperer la date du dernier recnesement de poid des bovin
-CREATE VIEW v_bovin_date_dernier_recencement_poid as
+CREATE OR REPLACE VIEW v_bovin_date_dernier_recencement_poid as
 SELECT 
     rpb.id_bovin, Max(rpb.date_recensement) date_dernier_recensement_poid
 FROM  recensement_poid_bovin rpb 
 GROUP BY rpb.id_bovin;
 
 -- vue pour recuperer le deriner recemcement de poid d un bovin
-CREATE VIEW v_bovin_dernier_recencement_poid as
+CREATE OR REPLACE VIEW v_bovin_dernier_recencement_poid as
 SELECT 
     rpb.*
 FROM recensement_poid_bovin rpb 
@@ -56,7 +56,7 @@ FROM recensement_poid_bovin rpb
         ON rpb.id_bovin = vbddrp.id_bovin AND rpb.date_recensement = vbddrp.date_dernier_recensement_poid;
 
 -- vue pour recuperer les info de bovin et son dernier poid
-CREATE VIEW v_bovin_poid_actuel as
+CREATE OR REPLACE VIEW v_bovin_poid_actuel as
 SELECT 
     b.*,
     vdrp.poid poid_actuel
@@ -66,7 +66,7 @@ FROM bovin b
 
 
 -- vue bovin  avec les information de mois et du poids actuel 
-CREATE VIEW v_bovin_mois_actuel_poid_actuel as
+CREATE OR REPLACE VIEW v_bovin_mois_actuel_poid_actuel as
 SELECT 
     b.*,
     vdrp.poid poid_actuel,
@@ -130,50 +130,3 @@ INSERT INTO type_fournisseur (code, libelle) VALUES
 ('SANITAIRE', 'Soins Vétérinaires & Médicaments'),
 ('MATERIEL', 'Équipements & Matériel d''élevage');
 
-CREATE TABLE type_payement (
-    id SERIAL PRIMARY KEY,
-    libelle VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE etat_payement (
-    id SERIAL PRIMARY KEY,
-    libelle VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE achat (
-    id SERIAL PRIMARY KEY,
-    id_fournisseur INTEGER NOT NULL,
-    date_achat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    id_type_payement INTEGER NOT NULL,
-    id_etat_payement INTEGER NOT NULL,
-    prix_total DOUBLE PRECISION NOT NULL, -- Montant global de la facture
-
-    CONSTRAINT fk_achat_fournisseur
-        FOREIGN KEY (id_fournisseur)
-        REFERENCES fournisseur(id_fournisseur),
-
-    CONSTRAINT fk_achat_type_payement
-        FOREIGN KEY (id_type_payement)
-        REFERENCES type_payement(id),
-
-    CONSTRAINT fk_achat_etat_payement
-        FOREIGN KEY (id_etat_payement)
-        REFERENCES etat_payement(id)
-);
-
-CREATE TABLE achat_details (
-    id SERIAL PRIMARY KEY,
-    id_achat INTEGER NOT NULL,
-    id_produit INTEGER NOT NULL,
-    quantite DOUBLE PRECISION NOT NULL,
-    prix_unitaire_facture DOUBLE PRECISION NOT NULL, -- Fige le prix au moment de la transaction
-
-    CONSTRAINT fk_details_achat
-        FOREIGN KEY (id_achat)
-        REFERENCES achat(id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_details_produit
-        FOREIGN KEY (id_produit)
-        REFERENCES produit(id_produit)
-);

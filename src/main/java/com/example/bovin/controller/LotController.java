@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.bovin.model.BovinModel;
 import com.example.bovin.model.LotModel;
 import com.example.bovin.model.RaceModel;
 import com.example.bovin.model.vue.VueBovinPoidsMoisActuel;

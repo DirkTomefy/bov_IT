@@ -58,6 +58,8 @@ public class FournisseurController {
         return "fournisseur/liste"; // Nom de ton fichier HTML (Thymeleaf)
     }
 
+    
+
     /**
      * Affiche les détails complets d'un fournisseur sélectionné ainsi que son catalogue de produits.
      * Route : /fournisseurs/details/5

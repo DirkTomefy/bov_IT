@@ -1,12 +1,10 @@
 package com.example.bovin.service;
 
 import com.example.bovin.model.BovinModel;
-import com.example.bovin.model.LotModel;
 import com.example.bovin.model.RecensementPoidBovin;
 import com.example.bovin.model.vue.VueBovinPoidsMoisActuel;
 import com.example.bovin.repository.BovinPoidMoisRepository;
 import com.example.bovin.repository.BovinRepository;
-import com.example.bovin.repository.LotRepository;
 import com.example.bovin.repository.RecensementPoidBovinRepository;
 
 import jakarta.transaction.Transactional;
